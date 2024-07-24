@@ -20,23 +20,25 @@ const LanguageBar = () => {
   return (
     <div className='flex flex-row gap-3 items-center mt-[0px]'>
       <button onClick={() => handleLanguage('en')}>
-        <Image
+        EN
+        {/* <Image
           className='w-[3rem] md:w-[3rem] lg:w-[2rem]'
           src='/english.webp'
           alt='english'
           height={20}
           width={20}
-        />
+        /> */}
       </button>
 
       <button onClick={() => handleLanguage('sk')}>
-        <Image
+        SK
+        {/* <Image
           className='w-[3rem] md:w-[3rem] lg:w-[2rem]'
           src='/slovak.webp'
           alt='slovak'
           height={20}
           width={20}
-        />
+        /> */}
       </button>
     </div>
   )

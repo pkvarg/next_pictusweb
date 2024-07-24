@@ -1,6 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react'
-import Link from 'next/link'
+import { Link } from 'react-scroll'
 import LanguageBar from './LanguageBar'
 import { useTranslations } from 'next-intl'
 import { useParams } from 'next/navigation'
@@ -11,21 +11,21 @@ const Header = () => {
   const t = useTranslations('Home')
   const { locale } = useParams()
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 0) {
-        setIsSticky(true)
-      } else {
-        setIsSticky(false)
-      }
-    }
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     if (window.scrollY > 0) {
+  //       setIsSticky(true)
+  //     } else {
+  //       setIsSticky(false)
+  //     }
+  //   }
 
-    window.addEventListener('scroll', handleScroll)
+  //   window.addEventListener('scroll', handleScroll)
 
-    return () => {
-      window.removeEventListener('scroll', handleScroll)
-    }
-  }, [])
+  //   return () => {
+  //     window.removeEventListener('scroll', handleScroll)
+  //   }
+  // }, [])
 
   return (
     <nav
@@ -39,9 +39,9 @@ const Header = () => {
       <div className='justify-between px-4 mx-auto md:items-center md:flex md:px-8'>
         <div className='mb-0 lg:mb-2'>
           <div className='flex items-center justify-between py-3 md:py-5 md:block'>
-            <Link className='text-[2.05rem] font-normal' href='/'>
-              {t('headerTitle')}
-            </Link>
+            <a className='text-[2.05rem] font-normal' href='/'>
+              &#60;&#47;&#62; PICTUSWEB development
+            </a>
             <div className='md:hidden'>
               <button
                 className='p-2 text-white rounded-md outline-none focus:border-gray-400 focus:border'
@@ -86,81 +86,41 @@ const Header = () => {
               navbar ? 'block' : 'hidden'
             }`}
           >
-            <ul className='justify-center space-y-8 md:flex md:space-x-6 md:space-y-0 text-[30px] lg:text-[25px] items-center'>
+            <ul className='text-[2rem] lg:text-[1.5rem] justify-center space-y-8 md:flex md:space-x-6 md:space-y-0'>
               <li>
                 <Link
-                  href='/#about'
-                  className='hover:text-red-600 cursor-pointer'
+                  to='offer'
+                  spy={true}
+                  smooth={true}
+                  offset={0}
+                  duration={500}
+                  className='hover:text-dark-red'
                 >
-                  {t('headerAbout')}
+                  {t('navbarOffer')}
                 </Link>
               </li>
               <li>
-                <Link
-                  href={`${locale}/admin`}
-                  className='hover:text-red-600 cursor-pointer'
-                >
-                  Admin
-                  {/* {t('headerBlog')} */}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href='/#events'
-                  className='hover:text-red-600 cursor-pointer'
-                >
-                  {t('headerEvents')}
-                </Link>
-              </li>
-
-              <div className='group relative  cursor-pointer'>
-                <div className='flex items-center justify-between'>
-                  <p className='hover:text-red-600'>{t('headerGallery')}</p>
-                </div>
-                <div className='invisible absolute z-50 flex w-max flex-col px-4 py-1 text-white shadow-xl group-hover:visible group-hover:bg-[#768c51]'>
-                  <Link
-                    href={`${locale}/gallery`}
-                    className='cursor-pointer hover:text-red-600'
-                  >
-                    {t('headerPhotos')}
-                  </Link>
-                  <Link
-                    href={`${locale}/podcasts`}
-                    className='cursor-pointer hover:text-red-600'
-                  >
-                    Audio
-                  </Link>
-                  <Link
-                    href={`${locale}/video`}
-                    className='cursor-pointer hover:text-red-600'
-                  >
-                    Video
-                  </Link>
-                  <li>
-                    <Link href={'/download'} className='hover:text-red-600'>
-                      {t('headerDownload')}
-                    </Link>
-                  </li>
-                </div>
-              </div>
-
-              <li>
-                <Link
-                  href='/#contact'
-                  className='hover:text-red-600 cursor-pointer'
-                >
-                  {t('headerContact')}
-                </Link>
+                <a href='/projects' className='hover:text-dark-red'>
+                  {t('navbarProjects')}
+                </a>
               </li>
 
               <li>
+                <Link
+                  to='contact'
+                  spy={true}
+                  smooth={true}
+                  offset={0}
+                  duration={500}
+                  className='hover:text-dark-red'
+                >
+                  {t('navbarContact')}
+                </Link>
+              </li>
+
+              <li className='lg:translate-y-[2px]'>
                 <LanguageBar />
               </li>
-              {/* <li>
-                <Link href='/login'>
-                  <FiLogIn className='hover:text-red-600 font-extrabold' />
-                </Link>
-              </li> */}
             </ul>
           </div>
         </div>
