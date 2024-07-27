@@ -3,21 +3,16 @@ import { textContainer, textVariant2 } from '@/lib/motion'
 
 interface TypingTextProps {
   title: string
-  textStyles: string
 }
 
 interface TitleTextProps {
   title: string
-  textStyles: string
 }
 
-export const TypingText: React.FC<TypingTextProps> = ({
-  title,
-  textStyles,
-}) => (
+export const TypingText: React.FC<TypingTextProps> = ({ title }) => (
   <motion.p
     variants={textContainer}
-    className={`font-normal text-secondary-white ${textStyles}`}
+    className={`font-normal text-secondary-white`}
   >
     {Array.from(title).map((letter, index) => (
       <motion.span variants={textVariant2} key={index}>
@@ -27,12 +22,12 @@ export const TypingText: React.FC<TypingTextProps> = ({
   </motion.p>
 )
 
-export const TitleText: React.FC<TitleTextProps> = ({ title, textStyles }) => (
+export const TitleText: React.FC<TitleTextProps> = ({ title }) => (
   <motion.h2
     variants={textVariant2}
     initial='hidden'
     whileInView='show'
-    className={textStyles}
+    //className={textStyles}
   >
     {title}
   </motion.h2>

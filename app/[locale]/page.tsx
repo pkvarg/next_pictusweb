@@ -45,13 +45,13 @@ const Home = () => {
     <div className='text-white text-[25px] hero-gradient h-screen'>
       <Header />
       <main className='flex lg:flex-row flex-col justify-center items-center mx-[10%] py-[100px]'>
-        <div className='text-[75px] flex flex-col justify-left'>
+        {/* <div className='text-[75px] flex flex-col justify-left'>
           <h1>{title1}</h1>
           <h1>{title2}</h1>
           <h1 className='leading-[105px]'>{title3}</h1>
-        </div>
-        {/* <motion.div
-          variants={staggerContainer}
+        </div> */}
+        <motion.div
+          variants={staggerContainer(0.1, 0.3)}
           initial='hidden'
           whileInView='show'
           viewport={{ once: false, amount: 0.25 }}
@@ -69,7 +69,7 @@ const Home = () => {
               <TitleText title={title3} />
             </div>
           </div>
-        </motion.div> */}
+        </motion.div>
         <div className='lg:w-[100%]'>
           <img
             className='w-[100%] ml-auto lg:mt-0 mt-[6rem]'
