@@ -7,6 +7,7 @@ import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { staggerContainer } from '@/lib/motion'
 import { TitleText, TypingText } from '../components/CustomTexts'
+import Projects from '../components/home/Projects'
 
 const Home = () => {
   const t = useTranslations('Home')
@@ -42,7 +43,7 @@ const Home = () => {
   //console.log('II:', items?.data?.items?.[0] || 'not yet')
 
   return (
-    <div className='text-white text-[25px] hero-gradient h-screen'>
+    <div className='text-white text-[25px] hero-gradient'>
       <Header />
       <main className='flex lg:flex-row flex-col justify-center items-center mx-[10%] py-[100px]'>
         {/* <div className='text-[75px] flex flex-col justify-left'>
@@ -78,6 +79,7 @@ const Home = () => {
           />
         </div>
       </main>
+      <Projects />
     </div>
   )
 }
