@@ -55,15 +55,16 @@
     "contactError2": "Error! Write to info@pictusweb.sk, please.",
     "contactSuccess": "Message successfully sent!",
 
-    "ourProjectsTitle": "Realized projects",
-    "ourProjectsSub": "We use modern technologies based on JavaScript programming language.",
-    "ourProjectsBlogDesc": "Prezentational Blog",
-    "ourProjectsWebDesc1": "Presentational web",
-    "ourProjectsWebDesc2": "for basic price",
-    "blogDesc": "Blog with admin menu for adding and editing of posts.",
-    "ourProjectsTechs": "Technologies:",
-    "ourProjectsEshopDesc": "Modern eshop",
-    "ourProjectsEshopProps": "Custom Admin menu for managing of product, orders, reviews, banners, mp3s, videos and users with different accesses. Automatic generating of invoices send to email. Payment via Stripe / Google Pay or cash. Registration and sign in via email or Google.",
+    "ourProjectsTitle": "Projects",
+    "ourProjectsIoana": "Simple presentational web of a designer",
+    "ourProjectsPrud": "Modern book eshop",
+    "ourProjectsDvl": "Presentational web of a carpenter",
+    "ourProjectsBlog": "Editable blog with custom admin menu",
+    "ourProjectsKatol": "Educational web",
+    "ourProjectsEstate": "Real estate calculator",
+    "ourProjectsLibro": "Custom social network with Pusher chat",
+    "ourProjectsChurch": "Church web with admin menu",
+
     "cookies": "This page only uses analytical cookies that are necessary for the website to function. We do not use functional or marketing cookies."
   }
 }

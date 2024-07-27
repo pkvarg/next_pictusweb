@@ -1,7 +1,9 @@
+'use client'
 import React from 'react'
 import { Tilt } from 'react-tilt'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
+import { useTranslations } from 'next-intl'
 
 interface Tag {
   name: string
@@ -18,10 +20,12 @@ interface Project {
 
 interface ProjectCardProps extends Project {
   index: number
-  className?: string // Make it optional
+  className?: string
 }
 
 const Projects: React.FC = () => {
+  const t = useTranslations('Home')
+
   const react = '/tech/reactjs.webp'
   const vite = '/tech/vite.webp'
   const tailwind = '/tech/tailwind.webp'
@@ -37,7 +41,7 @@ const Projects: React.FC = () => {
   const projects: Project[] = [
     {
       name: 'ioana-illustrations.eu',
-      description: 'Simple presentational web of a designer.',
+      description: t('ourProjectsIoana'),
       tags: [
         {
           name: 'react',
@@ -58,7 +62,7 @@ const Projects: React.FC = () => {
 
     {
       name: 'prud.sk',
-      description: 'Book eshop.',
+      description: t('ourProjectsPrud'),
       tags: [
         {
           name: 'react',
@@ -78,7 +82,7 @@ const Projects: React.FC = () => {
     },
     {
       name: 'kvalitnamontaz.sk',
-      description: 'Presentational web of a carpenter.',
+      description: t('ourProjectsDvl'),
       tags: [
         {
           name: 'react',
@@ -98,7 +102,7 @@ const Projects: React.FC = () => {
     },
     {
       name: 'bible-blog.online',
-      description: 'Editable blog with custom admin menu.',
+      description: t('ourProjectsBlog'),
       tags: [
         {
           name: 'next.js 13',
@@ -117,8 +121,28 @@ const Projects: React.FC = () => {
       website: 'https://blog.pictusweb.site/',
     },
     {
+      name: 'katolickaviera.sk',
+      description: t('ourProjectsKatol'),
+      tags: [
+        {
+          name: 'react',
+          image: react,
+        },
+        {
+          name: 'vite',
+          image: vite,
+        },
+        {
+          name: 'tailwind',
+          image: tailwind,
+        },
+      ],
+      image: 'katol.webp',
+      website: 'https://katolickaviera.sk/',
+    },
+    {
       name: 'michaldovala.sk',
-      description: 'Real Estate Calculator.',
+      description: t('ourProjectsEstate'),
       tags: [
         {
           name: 'next.js 14',
@@ -138,7 +162,7 @@ const Projects: React.FC = () => {
     },
     {
       name: 'librosophia.sk',
-      description: 'Custom Social Network with Pusher Chat.',
+      description: t('ourProjectsLibro'),
       tags: [
         {
           name: 'next.js 13',
@@ -158,7 +182,7 @@ const Projects: React.FC = () => {
     },
     {
       name: 'miestnacirkev.sk',
-      description: 'Church website with Admin menu.',
+      description: t('ourProjectsChurch'),
       tags: [
         {
           name: 'next.js 14',
@@ -194,7 +218,7 @@ const Projects: React.FC = () => {
             scale: 1,
             speed: 450,
           }}
-          className='bg-[#151030] p-5 rounded-2xl sm:w-[360px] w-full'
+          className='bg-gray-900 p-5 rounded-2xl sm:w-[360px] w-full'
         >
           <div className='relative w-full h-[230px]'>
             <img
@@ -215,12 +239,6 @@ const Projects: React.FC = () => {
 
           <div className='mt-4 flex flex-wrap gap-2'>
             {tags.map((tag) => (
-              // <p
-              //   key={`${name}-${tag.name}`}
-              //   className={`text-[22px] ${tag.color}`}
-              // >
-              //   #{tag.name}
-              // </p>
               <Image
                 key={`${name}-${tag.name}`}
                 className={`text-[22px]`}
@@ -239,9 +257,9 @@ const Projects: React.FC = () => {
   return (
     <>
       <div>
-        <h1 className='text-[35px] text-center'>Projects</h1>
+        <h1 className='text-[35px] text-center'>{t('ourProjectsTitle')}</h1>
       </div>
-      <div className='mt-4 lg:mt-20 flex justify-center flex-wrap gap-2 lg:gap-12'>
+      <div className='mt-4 lg:mt-20 flex justify-center flex-wrap gap-2 lg:gap-12 mx-4'>
         {projects.map((project, index) => (
           <ProjectCard
             key={`project-${index}`}
