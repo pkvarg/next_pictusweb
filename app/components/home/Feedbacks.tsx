@@ -94,7 +94,7 @@ const Feedbacks: React.FC = () => {
     },
   ]
   return (
-    <div className={`lg:mx-[2.5%] mt-[125px] lg:mt-12 rounded-[20px] `}>
+    <div className={`lg:mx-[2.5%] pt-[125px] lg:pt-12 rounded-[20px]`}>
       <div className={`rounded-2xl ${styles.padding} min-h-[300px]`}>
         <motion.div
           variants={staggerContainer(0.1, 0.3)}

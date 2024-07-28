@@ -19,7 +19,10 @@ const LanguageBar = () => {
 
   return (
     <div className='flex flex-row gap-3 items-center mt-[0px]'>
-      <button onClick={() => handleLanguage('en')}>
+      <button
+        className='hover:text-[#0388f4]'
+        onClick={() => handleLanguage('en')}
+      >
         EN
         {/* <Image
           className='w-[3rem] md:w-[3rem] lg:w-[2rem]'
@@ -30,7 +33,10 @@ const LanguageBar = () => {
         /> */}
       </button>
 
-      <button onClick={() => handleLanguage('sk')}>
+      <button
+        className='hover:text-[#0388f4]'
+        onClick={() => handleLanguage('sk')}
+      >
         SK
         {/* <Image
           className='w-[3rem] md:w-[3rem] lg:w-[2rem]'

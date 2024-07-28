@@ -1,31 +1,15 @@
 'use client'
-import React, { useState, useEffect } from 'react'
-import { Link } from 'react-scroll'
+import React, { useState } from 'react'
+import { useParams } from 'next/navigation'
+import Link from 'next/link'
 import LanguageBar from './LanguageBar'
 import { useTranslations } from 'next-intl'
-import { useParams } from 'next/navigation'
 
 const Header = () => {
   const [navbar, setNavbar] = useState(false)
   const [isSticky, setIsSticky] = useState(false)
   const t = useTranslations('Home')
   const { locale } = useParams()
-
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     if (window.scrollY > 0) {
-  //       setIsSticky(true)
-  //     } else {
-  //       setIsSticky(false)
-  //     }
-  //   }
-
-  //   window.addEventListener('scroll', handleScroll)
-
-  //   return () => {
-  //     window.removeEventListener('scroll', handleScroll)
-  //   }
-  // }, [])
 
   return (
     <nav
@@ -39,7 +23,7 @@ const Header = () => {
       <div className='justify-between px-4 mx-auto md:items-center md:flex md:px-8'>
         <div className='mb-0 lg:mb-2'>
           <div className='flex items-center justify-between py-3 md:py-5 md:block'>
-            <a className='text-[2.05rem] font-normal' href='/'>
+            <a className='text-[22.5px] lg:text-[2.05rem] font-normal' href='/'>
               &#60;&#47;&#62; PICTUSWEB development
             </a>
             <div className='md:hidden'>
@@ -86,33 +70,17 @@ const Header = () => {
               navbar ? 'block' : 'hidden'
             }`}
           >
-            <ul className='text-[2rem] lg:text-[1.5rem] justify-center space-y-8 md:flex md:space-x-6 md:space-y-0'>
+            <ul className='text-[22.5px] lg:text-[1.5rem] justify-center space-y-4 md:flex md:space-x-6 md:space-y-0'>
               <li>
-                <Link
-                  to='offer'
-                  spy={true}
-                  smooth={true}
-                  offset={0}
-                  duration={500}
-                  className='hover:text-dark-red'
-                >
-                  {t('navbarOffer')}
-                </Link>
-              </li>
-              <li>
-                <a href='/projects' className='hover:text-dark-red'>
+                <Link href='/#projects' className='hover:text-[#0388f4]'>
                   {t('navbarProjects')}
-                </a>
+                </Link>
               </li>
 
               <li>
                 <Link
-                  to='contact'
-                  spy={true}
-                  smooth={true}
-                  offset={0}
-                  duration={500}
-                  className='hover:text-dark-red'
+                  href={`${locale}/contact`}
+                  className='hover:text-[#0388f4]'
                 >
                   {t('navbarContact')}
                 </Link>

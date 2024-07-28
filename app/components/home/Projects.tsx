@@ -275,7 +275,7 @@ const Projects: React.FC = () => {
         whileInView='show'
         viewport={{ once: false, amount: 0.25 }}
       >
-        <h1 className='text-[35px] text-center'>
+        <h1 id='projects' className='lg:scroll-mt-14 text-[35px] text-center'>
           <TypingText title={t('ourProjectsTitle')} />
         </h1>
       </motion.div>
