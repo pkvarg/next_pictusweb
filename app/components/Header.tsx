@@ -118,7 +118,7 @@ const Header = () => {
                 </Link>
               </li>
 
-              <li className='lg:translate-y-[2px]'>
+              <li>
                 <LanguageBar />
               </li>
             </ul>

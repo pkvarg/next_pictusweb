@@ -4,6 +4,8 @@ import { Tilt } from 'react-tilt'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { useTranslations } from 'next-intl'
+import { TypingText } from '../CustomTexts'
+import { staggerContainer } from '@/lib/motion'
 
 interface Tag {
   name: string
@@ -211,7 +213,12 @@ const Projects: React.FC = () => {
     website,
   }) => {
     return (
-      <motion.div>
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: false, amount: 0.25 }}
+        transition={{ duration: 5 }}
+      >
         <Tilt
           options={{
             max: 45,
@@ -256,9 +263,17 @@ const Projects: React.FC = () => {
 
   return (
     <>
-      <div>
-        <h1 className='text-[35px] text-center'>{t('ourProjectsTitle')}</h1>
-      </div>
+      <motion.div
+        variants={staggerContainer(0.1, 0.3)}
+        initial='hidden'
+        whileInView='show'
+        viewport={{ once: false, amount: 0.25 }}
+      >
+        <h1 className='text-[35px] text-center'>
+          <TypingText title={t('ourProjectsTitle')} />
+        </h1>
+      </motion.div>
+
       <div className='mt-4 lg:mt-20 flex justify-center flex-wrap gap-2 lg:gap-12 mx-4'>
         {projects.map((project, index) => (
           <ProjectCard
