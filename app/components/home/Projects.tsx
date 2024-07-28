@@ -67,13 +67,19 @@ const Projects: React.FC = () => {
       description: t('ourProjectsPrud'),
       tags: [
         {
-          name: 'react',
-          image: react,
-        },
-        {
           name: 'mongodb',
           image: mongo,
         },
+
+        {
+          name: 'Express',
+          image: express,
+        },
+        {
+          name: 'react',
+          image: react,
+        },
+
         {
           name: 'redux',
           image: redux,

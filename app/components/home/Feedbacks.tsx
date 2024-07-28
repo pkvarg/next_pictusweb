@@ -68,7 +68,7 @@ const Feedbacks: React.FC = () => {
       testimonial: t('reviewsTom'),
       name: 'Tomas Dovala',
       designation: 'CEO',
-      company: 'DVL Construct',
+      company: 'Dovala Construction',
       image: 'tomas1.webp',
     },
     {

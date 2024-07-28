@@ -4,12 +4,14 @@ import Projects from '../components/home/Projects'
 import Hero from '../components/home/Hero'
 import Feedbacks from '../components/home/Feedbacks'
 import Footer from '../components/Footer'
+import Offer from '../components/home/Offer'
 
 const Home = () => {
   return (
     <div className='text-white text-[25px] hero-gradient'>
       <Header />
       <Hero />
+      <Offer />
       <Projects />
       <Feedbacks />
       <Footer />
