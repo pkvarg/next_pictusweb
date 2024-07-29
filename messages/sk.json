@@ -34,18 +34,6 @@
     "projectsTitle": "Projekty",
     "projectsDetails": "Detaily",
 
-    "contactTitle": "Napíšte nám správu",
-    "contactName": "Meno",
-    "contactSubject": "Predmet",
-    "contactEmail": "Email",
-    "contactPhone": "Telefón",
-    "contactMessage": "Vaša správa",
-    "contactAgree": "Súhlasím so spracovaním údajov",
-    "contactSend": "Odoslať",
-    "contactError": "Neodoslané! Napíšte nám na info@pictusweb.sk, prosím.",
-    "contactError2": "Chyba! Napíšte nám na info@pictusweb.sk, prosím.",
-    "contactSuccess": "Vaša správa bola úspešne odoslaná!",
-
     "ourProjectsTitle": "Projekty",
     "ourProjectsIoana": "Prezentačný web dizajnérky",
     "ourProjectsPrud": "Moderný knižný eshop",
@@ -68,6 +56,29 @@
 
     "getInTouch": "Potrebujete viac informácií?",
     "getInTouchButton": "Napíšte nám!",
+
+    "contactTitle": "Napíšte nám správu",
+    "contactName": "Meno",
+    "contactSubject": "Predmet",
+    "contactEmail": "Email",
+    "contactPhone": "Telefón",
+    "contactMessage": "Vaša správa",
+    "contactAgree": "Súhlasím so",
+    "contactGdpr": "spracovaním údajov",
+    "gdpr1": "Vami poskytnuté údaje neuchovávame v žiadnej databáze.",
+    "gdpr2": "Email bude použitý len na odpoveď na Vašu správu.",
+    "contactSend": "Odoslať",
+    "contactError": "Neodoslané! Napíšte nám na info@pictusweb.sk, prosím.",
+    "contactError2": "Chyba! Napíšte nám na info@pictusweb.sk, prosím.",
+    "contactSuccess": "Vaša správa bola úspešne odoslaná!",
+
+    "contactAboutTitle": "O nás",
+    "contactAboutAccount": "Číslo účtu IBAN:",
+    "contactAboutSR": "Slovensko",
+    "contactAboutReg1": "Spoločnosť Pictusweb, s.r.o. je zapísaná",
+    "contactAboutReg2": "v obchodnom registri okresného súdu Nitra:",
+    "contactAboutReg3": "Oddiel: Sro Vložka číslo: 57457/N",
+    "contactAboutReg4": "Firma nie je platcom DPH.",
 
     "cookies": "Táto stránka používa len analytické a pre fungovanie webu nevyhnutné cookies. Nepoužívame funkčné ani marketingové cookies."
   }

@@ -20,18 +20,6 @@
     "offer4desc": "We'll make you a complex web with custom content administration and advanced features.",
     "offerButton": "Get a quote",
 
-    "contactTitle": "Send us a message",
-    "contactName": "Name",
-    "contactSubject": "Subject",
-    "contactEmail": "Email",
-    "contactPhone": "Phone",
-    "contactMessage": "Your message",
-    "contactAgree": "I agree to process my data",
-    "contactSend": "Send",
-    "contactError": "Not sent! Contact us via info@pictusweb.sk, please.",
-    "contactError2": "Error! Write to info@pictusweb.sk, please.",
-    "contactSuccess": "Message successfully sent!",
-
     "ourProjectsTitle": "Projects",
     "ourProjectsIoana": "Simple presentational web of a designer",
     "ourProjectsPrud": "Modern book eshop",
@@ -54,6 +42,29 @@
 
     "getInTouch": "Do you want to find out more?",
     "getInTouchButton": "Get in touch!",
+
+    "contactTitle": "Send us a message",
+    "contactName": "Name",
+    "contactSubject": "Subject",
+    "contactEmail": "Email",
+    "contactPhone": "Phone",
+    "contactMessage": "Your message",
+    "contactAgree": "I agree to",
+    "contactGdpr": "process my data",
+    "gdpr1": "We do not store the data provided by you in any database.",
+    "gdpr2": "The email will only be used to respond to your message.",
+    "contactSend": "Send",
+    "contactError": "Not sent! Contact us via info@pictusweb.sk, please.",
+    "contactError2": "Error! Write to info@pictusweb.sk, please.",
+    "contactSuccess": "Message successfully sent!",
+
+    "contactAboutTitle": "About us",
+    "contactAboutAccount": "Banking Contact IBAN:",
+    "contactAboutSR": "Slovakia",
+    "contactAboutReg1": "Pictusweb Ltd. is registered",
+    "contactAboutReg2": "in the commercial register of the Nitra District Court:",
+    "contactAboutReg3": "Department: Ltd. Insert number: 57457/N",
+    "contactAboutReg4": "The company is not a VAT payer.",
 
     "cookies": "This page only uses analytical cookies that are necessary for the website to function. We do not use functional or marketing cookies."
   }

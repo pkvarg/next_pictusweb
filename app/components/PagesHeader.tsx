@@ -5,21 +5,14 @@ import Link from 'next/link'
 import LanguageBar from './LanguageBar'
 import { useTranslations } from 'next-intl'
 
-const Header = () => {
+const PagesHeader = () => {
   const [navbar, setNavbar] = useState(false)
   const [isSticky, setIsSticky] = useState(false)
   const t = useTranslations('Home')
   const { locale } = useParams()
 
   return (
-    <nav
-      id='navbar'
-      className={
-        isSticky
-          ? 'sticky top-0  w-full text-white nav-font bg-[#768c51] z-9999'
-          : 'top-0  w-full text-white nav-font'
-      }
-    >
+    <nav id='navbar' className='w-full text-white bg-transparent'>
       <div className='justify-between px-4 mx-auto md:items-center md:flex md:px-8'>
         <div className='mb-0 lg:mb-2'>
           <div className='flex items-center justify-between py-3 md:py-5 md:block'>
@@ -100,4 +93,4 @@ const Header = () => {
   )
 }
 
-export default Header
+export default PagesHeader
