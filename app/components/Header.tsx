@@ -82,6 +82,16 @@ const Header = () => {
 
               <li>
                 <Link
+                  href={`${locale}/podcast`}
+                  className='hover:text-[#0388f4]'
+                >
+                  Podcast
+                  {/* {t('navbarProjects')} */}
+                </Link>
+              </li>
+
+              <li>
+                <Link
                   href={`${locale}/contact`}
                   className='hover:text-[#0388f4]'
                 >

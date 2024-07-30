@@ -70,14 +70,14 @@ const Contact = () => {
 
     try {
       const { data } = await axios.put(
-        'https://tss.pictusweb.com/email/cba/mailer',
-        //'http://localhost:3010/email/cba/mailer',
+        'https://tss.pictusweb.com/email/pw/mailer',
+        //'http://localhost:3010/email/pw/mailer',
         { name, email, phone, mailMessage, locale },
         config
       )
 
       if (data.status === 'Success') {
-        setMessageSuccess(t('contactMessageSuccess'))
+        setMessageSuccess(t('contactSuccess'))
       }
     } catch (error) {
       setMessage(t('contactError'))
@@ -110,7 +110,7 @@ const Contact = () => {
                       {t('contactName')}
                     </label>
                     <input
-                      className='form-control rounded-xl'
+                      className='form-control rounded-xl pl-2'
                       type='text'
                       name='user_name'
                       value={name}
@@ -122,7 +122,7 @@ const Contact = () => {
                       {t('contactEmail')}
                     </label>
                     <input
-                      className='form-control rounded-xl'
+                      className='form-control rounded-xl pl-2'
                       type='email'
                       name='user_email'
                       value={email}
@@ -134,7 +134,7 @@ const Contact = () => {
                       {t('contactPhone')}
                     </label>
                     <input
-                      className='form-control rounded-xl'
+                      className='form-control rounded-xl pl-2'
                       type='text'
                       name='user_phone'
                       value={phone}
