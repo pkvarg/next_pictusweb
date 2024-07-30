@@ -4,12 +4,15 @@ import { useTranslations } from 'next-intl'
 const About = () => {
   const t = useTranslations('Home')
   return (
-    <div className='flex flex-col  justify-center items-center gap-4 text-[25px] mx-4 my-16'>
-      <h1 className='lg:text-[25x] text-[35px] py-8'>
+    <div
+      id='about'
+      className='flex flex-col justify-center items-center gap-4 text-[20px] lg:text-[22.5px] mx-4 my-8'
+    >
+      <h1 className='text-[30px] lg:text-[35x] pt-8 pb-16'>
         {' '}
         {t('contactAboutTitle')}
       </h1>
-      <div className='flex flex-col lg:flex-row justify-center items-center lg:items-start gap-4 lg:gap-[15%] w-full'>
+      <div className='flex flex-col lg:flex-row justify-center items-start lg:items-start gap-4 lg:gap-[15%] w-full'>
         <div>
           <p>Pictusweb.s.r.o.</p>
           <p>Nábrežná 42</p>

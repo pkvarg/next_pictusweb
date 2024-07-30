@@ -4,16 +4,19 @@ import React, { useState } from 'react'
 const TradeRules = () => {
   const [openTradeRules, setOpenTradeRules] = useState<boolean>(false)
   return (
-    <div className='mx-4 lg:mx-10 text-center lg:text-justify flex flex-col gap-4'>
+    <div
+      id='trade-rules'
+      className='mx-4 lg:mx-10 text-[20px] lg:text-[22.5px] text-justify flex flex-col gap-4'
+    >
       <h2
         onClick={() => setOpenTradeRules((prev) => !prev)}
-        className='text-center text-[35px] cursor-pointer hover:text-[#0388f4]'
+        className='text-center text-[30px] lg:text-[35x] cursor-pointer hover:text-[#0388f4]'
       >
         VŠEOBECNÉ OBCHODNÉ PODMIENKY +
       </h2>
       {openTradeRules && (
         <>
-          <h3 className='mt-16'>1. VŠEOBECNÉ USTANOVENIA</h3>
+          <h3 className='mt-8'>1. VŠEOBECNÉ USTANOVENIA</h3>
           Tieto všeobecné obchodné podmienky (ďalej len „VOP“) upravujú práva a
           povinnosti zmluvných strán vyplývajúce z kúpnej zmluvy uzatvorenej
           medzi Kupujúcim - Spotrebiteľom a Predávajúcim. Predmetom kúpnej

@@ -4,10 +4,13 @@ import React, { useState } from 'react'
 const Gdpr = () => {
   const [openGdpr, setOpenGdpr] = useState<boolean>(false)
   return (
-    <div className='mx-4 lg:mx-12 lg:py-4 py-6 text-center lg:text-justify flex flex-col gap-4 '>
+    <div
+      id='gdpr'
+      className='mx-4 lg:mx-12 lg:py-4 py-6 text-justify flex flex-col gap-4 text-[20px] lg:text-[22.5px]'
+    >
       <h1
         onClick={() => setOpenGdpr((prev) => !prev)}
-        className='text-center text-[25px] lg:text-[35px] mb-8 cursor-pointer hover:text-[#0388f4]'
+        className='text-center text-[30px] lg:text-[35x] pt-8 pb-8 cursor-pointer hover:text-[#0388f4]'
       >
         GDPR +
       </h1>

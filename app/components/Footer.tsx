@@ -1,32 +1,20 @@
 'use client'
 import { motion } from 'framer-motion'
-
 import { footerVariants } from '@/lib/motion'
+import { useTranslations } from 'next-intl'
+import { useParams } from 'next/navigation'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
-const styles = {
-  innerWidth: '2xl:max-w-[1280px] w-full',
-  interWidth: 'lg:w-[80%] w-[100%]',
+const Footer = () => {
+  const t = useTranslations('Home')
+  const { locale } = useParams()
+  const path = usePathname()
+  const page = path.slice(4)
 
-  paddings: 'sm:p-16 xs:p-8 px-6 py-12',
-  yPaddings: 'sm:py-16 xs:py-8 py-12',
-  xPaddings: 'sm:px-16 px-6',
-  topPaddings: 'sm:pt-16 xs:pt-8 pt-12',
-  bottomPaddings: 'sm:pb-16 xs:pb-8 pb-12',
+  console.log(path, page)
 
-  flexCenter: 'flex justify-center items-center',
-  flexStart: 'flex justify-start items-start',
-  flexEnd: 'flex justify-end',
-  navPadding: 'pt-[98px]',
-
-  // hero section
-  heroHeading:
-    'font-bold lg:text-[144px] md:text-[100px] sm:text-[60px] text-[44px] lg:leading-[158.4px] md:leading-[114.4px] sm:leading-[74.4px] leading-[64.4px] uppercase text-white',
-  heroDText:
-    'md:w-[212px] sm:w-[80px] w-[60px] md:h-[108px] sm:h-[48px] h-[38px] md:border-[18px] border-[9px] rounded-r-[50px] border-white sm:mx-2 mx-[6px]',
-}
-
-const Footer = () => (
-  <>
+  return (
     <div className='mx-8 mt-16'>
       <motion.footer
         variants={footerVariants}
@@ -44,14 +32,29 @@ const Footer = () => (
                 </h4>
                 <h4 className='font-extrabold text-white'>Pictusweb s.r.o.</h4>
               </div>
-              <a className='font-extrabold text-white' href='/about'>
+              <Link
+                className='font-extrabold text-white'
+                href={
+                  page !== 'contact' ? `${locale}/contact/#about` : `#about`
+                }
+              >
                 O firme
-              </a>
+              </Link>
 
-              <a className='font-extrabold text-white' href='/gdpr'>
+              <a
+                className='font-extrabold text-white'
+                href={page !== 'contact' ? `${locale}/contact/#gdpr` : `#gdpr`}
+              >
                 GDPR
               </a>
-              <a className='font-extrabold text-white' href='/trade-rules'>
+              <a
+                className='font-extrabold text-white'
+                href={
+                  page !== 'contact'
+                    ? `${locale}/contact/#trade-rules`
+                    : `#trade-rules`
+                }
+              >
                 Obchodné podmienky
               </a>
               <p className='font-normal text-white  text-[17.5px] opacity-50'>
@@ -65,7 +68,7 @@ const Footer = () => (
       </motion.footer>
       <div className='bg:hero-gradient h-10'></div>
     </div>
-  </>
-)
+  )
+}
 
 export default Footer
