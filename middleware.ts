@@ -1,18 +1,3 @@
-// import createMiddleware from 'next-intl/middleware'
-
-// export default createMiddleware({
-//   // A list of all locales that are supported
-//   locales: ['en', 'sk'],
-
-//   // Used when no locale matches
-//   defaultLocale: 'sk',
-// })
-
-// export const config = {
-//   // Match only internationalized pathnames
-//   matcher: ['/', '/(sk|en)/:path*'],
-// }
-
 import { NextRequest, NextResponse } from 'next/server'
 import createIntlMiddleware from 'next-intl/middleware'
 import { isValidPassword } from './lib/isValidPassword'

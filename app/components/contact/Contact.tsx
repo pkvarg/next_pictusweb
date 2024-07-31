@@ -31,6 +31,7 @@ const Contact = () => {
   const y = process.env.VITE_EMAIL_EXTRA_TWO
   const [passwordGroupOne, setPasswordGroupOne] = useState(x)
   const [passwordGroupTwo, setPasswordGroupTwo] = useState(y)
+  const origin = 'PICTUSWEB.SK'
 
   const sendEmail = (e: any) => {
     e.preventDefault()
@@ -70,9 +71,9 @@ const Contact = () => {
 
     try {
       const { data } = await axios.put(
-        'https://tss.pictusweb.com/email/pw/mailer',
-        //'http://localhost:3010/email/pw/mailer',
-        { name, email, phone, mailMessage, locale },
+        'https://tss.pictusweb.com/email/universal/mailer',
+        //'http://localhost:3010/email/universal/mailer',
+        { name, email, phone, mailMessage, locale, origin },
         config
       )
 
