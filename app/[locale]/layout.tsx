@@ -4,7 +4,7 @@ import './globals.css'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
 //import AudioProvider from '@/utils/AudioProvider'
-//import { cn } from '@/lib/utils'
+import { cn } from '@/lib/utils'
 //import PodcastPlayer from '@/components/audio/PodcastPlayer'
 
 const inter = Yanone_Kaffeesatz({ subsets: ['latin'] })
@@ -55,7 +55,7 @@ export default async function RootLayout({
           <meta property='fb:app_id' content='627076731624225' />
         </head> */}
         {/* <AudioProvider> */}
-        <body className={inter.className}>
+        <body className={cn(inter.className)}>
           {children}
 
           {/* <PodcastPlayer /> */}
