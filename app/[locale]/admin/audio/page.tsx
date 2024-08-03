@@ -29,7 +29,7 @@ const Audio = () => {
   const [audioUrl, setAudioUrl] = useState('')
 
   const voiceCategories = ['alloy', 'shimmer', 'nova', 'echo', 'fable', 'onyx']
-  const [voiceType, setVoiceType] = useState<string>('onyx')
+  const [voiceType, setVoiceType] = useState<string | null>(null)
 
   const handleInputChange = (event: any) => {
     setInputText(event.target.value)
@@ -40,12 +40,10 @@ const Audio = () => {
     //await createSpeech(podcastTitle, inputText)
 
     try {
-      console.log('1hS file', file)
-
-      var formdata = new FormData()
+      const formdata = new FormData()
       if (file) formdata.append('files', file)
 
-      var requestOptions = { method: 'POST', body: formdata }
+      const requestOptions = { method: 'POST', body: formdata }
 
       const response = await fetch('/api/podcastImg', requestOptions)
       const result = await response.text()
@@ -119,7 +117,7 @@ const Audio = () => {
             id='category'
             name='category'
             className='mt-2 text-[#2e2236]'
-            value={voiceType}
+            value={voiceType || 'choose voice'}
             onChange={(e) => handleVoiceType(e.target.value)}
           >
             {voiceCategories.map((category) => (
@@ -155,31 +153,20 @@ const Audio = () => {
 
         {openOwnImg && (
           <div className='flex relative bg-[#2e2236] mt-8'>
+            <input
+              type='file'
+              id='image'
+              onChange={handleFileChange}
+              style={{ display: 'none' }}
+            />
             <button
               type='button'
-              className='w-[36px] h-[36px] border border-green-100 flex items-center justify-center cursor-pointer'
-              onClick={() => setOpen(!open)}
+              className='border border-white w-[36px] h-[36px] 100 flex items-center justify-center cursor-pointer'
             >
-              <Image src='/plus.png' alt='' width={16} height={16} />
+              <label htmlFor='image'>
+                <Image src='/plus.png' alt='' width={16} height={16} />
+              </label>
             </button>
-            {open && (
-              <div className='flex gap-[20px] z-999 w-[100%] absolute left-[50px]'>
-                <input
-                  type='file'
-                  id='image'
-                  onChange={handleFileChange}
-                  style={{ display: 'none' }}
-                />
-                <button
-                  type='button'
-                  className='border border-white w-[36px] h-[36px] 100 flex items-center justify-center cursor-pointer'
-                >
-                  <label htmlFor='image'>
-                    <Image src='/image.png' alt='' width={16} height={16} />
-                  </label>
-                </button>
-              </div>
-            )}
             <button
               type='button'
               className='ml-16 border border-white w-[36px] h-[36px] 100 flex items-center justify-center cursor-pointer'
@@ -187,7 +174,7 @@ const Audio = () => {
               <label htmlFor='image'>
                 <AiOutlineDelete
                   className='text-red-700'
-                  onClick={() => removeFile}
+                  onClick={removeFile}
                 />
               </label>
             </button>

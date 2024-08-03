@@ -17,9 +17,8 @@ export async function createSpeech(
     input: inputText,
   })
 
-  const speechFile = path.resolve(`./public/podcast/${podcastTitle}.mp3`)
+  const speechFile = path.resolve(`./public/podcast/mp3s/${podcastTitle}.mp3`)
 
-  console.log('sf', speechFile)
   const buffer = Buffer.from(await mp3.arrayBuffer())
   await fs.promises.writeFile(speechFile, buffer)
 }
