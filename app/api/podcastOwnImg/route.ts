@@ -38,7 +38,9 @@ export async function POST(req: NextRequest) {
       // eslint-disable-next-line
       await pump(nodeReadableStream, fs.createWriteStream(filePath))
 
-      return NextResponse.json({ status: 'success' })
+      const frontendPath = `/podcast/images/${fileEntry.name}`
+
+      return NextResponse.json({ status: 'success', data: frontendPath })
     } else {
       throw new Error('The provided form data entry is not a file.')
     }

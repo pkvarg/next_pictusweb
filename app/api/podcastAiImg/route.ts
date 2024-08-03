@@ -53,7 +53,9 @@ export async function POST(req: NextRequest) {
 
     const filePath = path.resolve(`./public/podcast/images/${title}.png`)
 
-    console.log('fP', filePath)
+    const frontendPath = `/podcast/images/${title}.png`
+
+    console.log('frontP', frontendPath)
 
     buffer &&
       fs.writeFile(filePath, Buffer.from(buffer), (err) => {
@@ -64,7 +66,7 @@ export async function POST(req: NextRequest) {
         }
       })
 
-    return NextResponse.json({ status: 'success' })
+    return NextResponse.json({ status: 'success', data: frontendPath })
   } catch (e: any) {
     console.error('Error saving image:', e)
     return NextResponse.json({ status: 'fail', data: e.message })

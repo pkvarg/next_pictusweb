@@ -47,8 +47,9 @@ const Audio = () => {
         const requestOptions = { method: 'POST', body: formdata }
 
         const response = await fetch('/api/podcastOwnImg', requestOptions)
-        const result = await response.text()
-        console.log(result)
+        const result = await response.json()
+        console.log('returned', result)
+        setPreviewUrl(result.data as string)
       } catch (error) {
         console.log('hs', error)
       }
@@ -56,23 +57,23 @@ const Audio = () => {
 
     // img from AI
 
-    // const formdata = new FormData()
-    // formdata.append('title', podcastTitle)
-    // formdata.append('prompt', imagePrompt)
     const data = {
       title: podcastTitle,
       prompt: imagePrompt,
     }
 
-    const response = await fetch('/api/podcastAiImg', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json', // Set the content type to JSON
-      },
-      body: JSON.stringify(data), // Convert the data object to a JSON string
-    })
-
-    console.log('returned', response)
+    if (imagePrompt) {
+      const response = await fetch('/api/podcastAiImg', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json', // Set the content type to JSON
+        },
+        body: JSON.stringify(data), // Convert the data object to a JSON string
+      })
+      const result = await response.json()
+      console.log('returned', result)
+      setPreviewUrl(result.data as string)
+    }
 
     //console.log(podcastTitle, inputText)
     //alert('Speech created and saved to the server.')
