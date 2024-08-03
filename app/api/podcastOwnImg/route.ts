@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import fs from 'fs'
 import { pipeline, Readable } from 'stream'
 import { promisify } from 'util'
+import { getTimeStamp } from '@/lib/timestamp'
 const pump = promisify(pipeline)
 
 function readableStreamToNodeReadable(
@@ -30,7 +31,8 @@ export async function POST(req: NextRequest) {
 
     // Type guard to ensure fileEntry is a File
     if (fileEntry && fileEntry instanceof File) {
-      const filePath = `./public/podcast/images/${fileEntry.name}`
+      const timestamp = getTimeStamp()
+      const filePath = `./public/podcast/images/${timestamp}_${fileEntry.name}`
       const nodeReadableStream = readableStreamToNodeReadable(
         fileEntry.stream()
       )
@@ -38,7 +40,7 @@ export async function POST(req: NextRequest) {
       // eslint-disable-next-line
       await pump(nodeReadableStream, fs.createWriteStream(filePath))
 
-      const frontendPath = `/podcast/images/${fileEntry.name}`
+      const frontendPath = `/podcast/images/${timestamp}_${fileEntry.name}`
 
       return NextResponse.json({ status: 'success', data: frontendPath })
     } else {

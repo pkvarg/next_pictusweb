@@ -3,7 +3,8 @@ import fetch from 'node-fetch'
 import fs from 'fs'
 import path from 'path'
 import OpenAI from 'openai'
-import { pipeline, Readable } from 'stream'
+import { Readable } from 'stream'
+import { getTimeStamp } from '@/lib/timestamp'
 
 const openai = new OpenAI()
 
@@ -51,9 +52,13 @@ export async function POST(req: NextRequest) {
     const response = imageUrl && (await fetch(imageUrl))
     const buffer = response && (await response.arrayBuffer())
 
-    const filePath = path.resolve(`./public/podcast/images/${title}.png`)
+    const timestamp = getTimeStamp()
 
-    const frontendPath = `/podcast/images/${title}.png`
+    const filePath = path.resolve(
+      `./public/podcast/images/${title}${timestamp}.png`
+    )
+
+    const frontendPath = `/podcast/images/${title}_${timestamp}.png`
 
     console.log('frontP', frontendPath)
 

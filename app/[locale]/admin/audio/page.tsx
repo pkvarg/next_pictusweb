@@ -1,12 +1,13 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { createSpeech } from './../../../components/admin/BackAi'
 
 import { useToast } from '@/components/ui/use-toast'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { AiOutlineDelete } from 'react-icons/ai'
+import { Loader } from 'lucide-react'
 
 const Audio = () => {
   const { toast } = useToast()
@@ -31,12 +32,51 @@ const Audio = () => {
   const voiceCategories = ['alloy', 'shimmer', 'nova', 'echo', 'fable', 'onyx']
   const [voiceType, setVoiceType] = useState<string | null>(null)
 
-  // const handleInputChange = (event: any) => {
-  //   setInputText(event.target.value)
-  // }
+  useEffect(() => {
+    if (openOwnImg) {
+      setOpenAiImage(false)
+    }
+    if (openAiImg) {
+      setOpenOwnImage(false)
+    }
+  }, [openOwnImg, openAiImg])
+
+  const handleGetAiImage = async (e: any) => {
+    e.preventDefault()
+    setPreviewUrl(null)
+    if (!imagePrompt || !podcastTitle) {
+      toast({ title: 'Title and Prompt must not be empty.' })
+    } else {
+      const data = {
+        title: podcastTitle,
+        prompt: imagePrompt,
+      }
+      setIsSubmitting(true)
+      const response = await fetch('/api/podcastAiImg', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json', // Set the content type to JSON
+        },
+        body: JSON.stringify(data), // Convert the data object to a JSON string
+      })
+      const result = await response.json()
+      console.log('returned', result)
+
+      setIsSubmitting(false)
+      setPreviewUrl(result.data as string)
+    }
+  }
 
   const handleSubmit = async (e: any) => {
     e.preventDefault()
+    if (!podcastTitle || !inputText) {
+      toast({
+        title: 'Title and Input Text must not be empty.',
+        variant: 'destructive',
+      })
+      return
+    }
+    setIsSubmitting(true)
     //await createSpeech(podcastTitle, inputText)
     // save file to server
     if (file) {
@@ -54,30 +94,8 @@ const Audio = () => {
         console.log('hs', error)
       }
     }
-
-    // img from AI
-
-    const data = {
-      title: podcastTitle,
-      prompt: imagePrompt,
-    }
-
-    if (imagePrompt) {
-      const response = await fetch('/api/podcastAiImg', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json', // Set the content type to JSON
-        },
-        body: JSON.stringify(data), // Convert the data object to a JSON string
-      })
-      const result = await response.json()
-      console.log('returned', result)
-      setPreviewUrl(result.data as string)
-    }
-
-    //console.log(podcastTitle, inputText)
-    //alert('Speech created and saved to the server.')
-    toast({ title: 'Speech created and saved to the server.' })
+    setIsSubmitting(false)
+    toast({ title: 'Podcast created and saved to the server.' })
   }
 
   const handleVoiceType = (value: string) => {
@@ -157,13 +175,43 @@ const Audio = () => {
             <audio src={`/${voiceType}.mp3`} autoPlay className='hidden' />
           )}
         </div>
-        <div className='flex flex-col lg:flex-row gap-2 my-4'>
+        <div className='flex flex-col gap-2 my-4'>
           <p
             onClick={() => setOpenOwnImage((prev) => !prev)}
             className='cursor-pointer hover:text-blue-500'
           >
             Upload your own Image
           </p>
+
+          {openOwnImg && (
+            <div className='flex relative bg-[#2e2236] my-8'>
+              <input
+                type='file'
+                id='image'
+                onChange={handleFileChange}
+                style={{ display: 'none' }}
+              />
+              <button
+                type='button'
+                className='border border-white w-[36px] h-[36px] 100 flex items-center justify-center cursor-pointer'
+              >
+                <label htmlFor='image'>
+                  <Image src='/plus.png' alt='' width={16} height={16} />
+                </label>
+              </button>
+              <button
+                type='button'
+                className='ml-16 border border-white w-[36px] h-[36px] 100 flex items-center justify-center cursor-pointer'
+              >
+                <label htmlFor='image'>
+                  <AiOutlineDelete
+                    className='text-red-700'
+                    onClick={removeFile}
+                  />
+                </label>
+              </button>
+            </div>
+          )}
 
           <p
             onClick={() => setOpenAiImage((prev) => !prev)}
@@ -173,44 +221,25 @@ const Audio = () => {
           </p>
         </div>
 
-        {openOwnImg && (
-          <div className='flex relative bg-[#2e2236] mt-8'>
-            <input
-              type='file'
-              id='image'
-              onChange={handleFileChange}
-              style={{ display: 'none' }}
-            />
-            <button
-              type='button'
-              className='border border-white w-[36px] h-[36px] 100 flex items-center justify-center cursor-pointer'
-            >
-              <label htmlFor='image'>
-                <Image src='/plus.png' alt='' width={16} height={16} />
-              </label>
-            </button>
-            <button
-              type='button'
-              className='ml-16 border border-white w-[36px] h-[36px] 100 flex items-center justify-center cursor-pointer'
-            >
-              <label htmlFor='image'>
-                <AiOutlineDelete
-                  className='text-red-700'
-                  onClick={removeFile}
-                />
-              </label>
-            </button>
-          </div>
-        )}
-
         {openAiImg && (
-          <div className='flex relative bg-[#2e2236] mt-8'>
+          <div className='flex flex-col relative bg-[#2e2236] mt-8'>
             <textarea
               className='text-black text-[18px] pl-2 w-[100%] mt-2 h-[300px]'
               value={imagePrompt}
               onChange={(e) => setImagePrompt(e.target.value)}
               placeholder='Enter promt for AI image creation'
             />
+
+            {isSubmitting ? (
+              <Loader size={60} className='animate-spin ml-[45%] mt-4' />
+            ) : (
+              <button
+                onClick={handleGetAiImage}
+                className='mt-4 hover:text-blue-500'
+              >
+                Get AI Image from Prompt
+              </button>
+            )}
           </div>
         )}
 
@@ -228,9 +257,13 @@ const Audio = () => {
           )
         )}
 
-        <button onClick={handleSubmit} className='mt-4 hover:text-green-500'>
-          Create Speech
-        </button>
+        {isSubmitting ? (
+          <Loader size={60} className='animate-spin ml-[45%] mt-4' />
+        ) : (
+          <button onClick={handleSubmit} className='mt-4 hover:text-green-500'>
+            Create Speech
+          </button>
+        )}
       </form>
     </div>
   )
