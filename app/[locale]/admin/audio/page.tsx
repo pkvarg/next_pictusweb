@@ -17,40 +17,62 @@ const Audio = () => {
   const [media, setMedia] = useState('')
 
   const [openAiImg, setOpenAiImage] = useState<boolean>(false)
-  const [open, setOpen] = useState(false)
+
   const [file, setFile] = useState<File | null>(null)
   // State to hold the preview URL of the selected file
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
 
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const [imageUrl, setImageUrl] = useState('')
+  const [imagePrompt, setImagePrompt] = useState('')
 
-  const [audioUrl, setAudioUrl] = useState('')
+  const [aiImage, setAiImage] = useState('')
 
   const voiceCategories = ['alloy', 'shimmer', 'nova', 'echo', 'fable', 'onyx']
   const [voiceType, setVoiceType] = useState<string | null>(null)
 
-  const handleInputChange = (event: any) => {
-    setInputText(event.target.value)
-  }
+  // const handleInputChange = (event: any) => {
+  //   setInputText(event.target.value)
+  // }
 
   const handleSubmit = async (e: any) => {
     e.preventDefault()
     //await createSpeech(podcastTitle, inputText)
+    // save file to server
+    if (file) {
+      try {
+        const formdata = new FormData()
+        if (file) formdata.append('files', file)
 
-    try {
-      const formdata = new FormData()
-      if (file) formdata.append('files', file)
+        const requestOptions = { method: 'POST', body: formdata }
 
-      const requestOptions = { method: 'POST', body: formdata }
-
-      const response = await fetch('/api/podcastImg', requestOptions)
-      const result = await response.text()
-      console.log(result)
-    } catch (error) {
-      console.log('hs', error)
+        const response = await fetch('/api/podcastOwnImg', requestOptions)
+        const result = await response.text()
+        console.log(result)
+      } catch (error) {
+        console.log('hs', error)
+      }
     }
+
+    // img from AI
+
+    // const formdata = new FormData()
+    // formdata.append('title', podcastTitle)
+    // formdata.append('prompt', imagePrompt)
+    const data = {
+      title: podcastTitle,
+      prompt: imagePrompt,
+    }
+
+    const response = await fetch('/api/podcastAiImg', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json', // Set the content type to JSON
+      },
+      body: JSON.stringify(data), // Convert the data object to a JSON string
+    })
+
+    console.log('returned', response)
 
     //console.log(podcastTitle, inputText)
     //alert('Speech created and saved to the server.')
@@ -85,7 +107,6 @@ const Audio = () => {
     }
   }
   const removeFile = () => {
-    console.log('remove')
     setFile(null)
     setPreviewUrl(null)
     setMedia('')
@@ -105,7 +126,7 @@ const Audio = () => {
         <textarea
           className='text-black text-[18px] pl-2 w-[100%] mt-2 h-[300px]'
           value={inputText}
-          onChange={handleInputChange}
+          onChange={(e) => setInputText(e.target.value)}
           placeholder='Enter text to convert to speech'
         />
         <div className='flex flex-col gap-2.5'>
@@ -137,14 +158,14 @@ const Audio = () => {
         </div>
         <div className='flex flex-col lg:flex-row gap-2 my-4'>
           <p
-            onClick={() => setOpenOwnImage(true)}
+            onClick={() => setOpenOwnImage((prev) => !prev)}
             className='cursor-pointer hover:text-blue-500'
           >
             Upload your own Image
           </p>
 
           <p
-            onClick={() => setOpenAiImage(true)}
+            onClick={() => setOpenAiImage((prev) => !prev)}
             className='cursor-pointer hover:text-blue-500'
           >
             Use AI to create an Image
@@ -181,6 +202,17 @@ const Audio = () => {
           </div>
         )}
 
+        {openAiImg && (
+          <div className='flex relative bg-[#2e2236] mt-8'>
+            <textarea
+              className='text-black text-[18px] pl-2 w-[100%] mt-2 h-[300px]'
+              value={imagePrompt}
+              onChange={(e) => setImagePrompt(e.target.value)}
+              placeholder='Enter promt for AI image creation'
+            />
+          </div>
+        )}
+
         {previewUrl ? (
           <Image
             className='my-4 w-[150px] h-auto'
@@ -195,7 +227,7 @@ const Audio = () => {
           )
         )}
 
-        <button onClick={handleSubmit} className='mt-4'>
+        <button onClick={handleSubmit} className='mt-4 hover:text-green-500'>
           Create Speech
         </button>
       </form>
