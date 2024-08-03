@@ -10,6 +10,7 @@ export async function createSpeech(
   podcastTitle: string,
   inputText: string
 ): Promise<void> {
+  console.log('bck', podcastTitle, inputText)
   const mp3 = await openai.audio.speech.create({
     model: 'tts-1',
     voice: 'alloy',
@@ -18,7 +19,7 @@ export async function createSpeech(
 
   const speechFile = path.resolve(`./public/podcast/${podcastTitle}.mp3`)
 
-  console.log(speechFile)
+  console.log('sf', speechFile)
   const buffer = Buffer.from(await mp3.arrayBuffer())
   await fs.promises.writeFile(speechFile, buffer)
 }
