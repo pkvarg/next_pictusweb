@@ -1,18 +1,21 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import { createSpeech } from './../../../components/admin/BackAi'
-
 import { useToast } from '@/components/ui/use-toast'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { AiOutlineDelete } from 'react-icons/ai'
 import { Loader } from 'lucide-react'
+import {
+  create,
+  createSpeech,
+} from '@/app/[locale]/admin/_actions/podcastActions'
 
 const Audio = () => {
   const { toast } = useToast()
-  const [inputText, setInputText] = useState('')
+  const [textPrompt, setTextPrompt] = useState<string>('')
   const [podcastTitle, setPodcastTitle] = useState('')
+  const [description, setDescription] = useState<string>('')
 
   const [openOwnImg, setOpenOwnImage] = useState<boolean>(false)
   const [media, setMedia] = useState('')
@@ -21,13 +24,18 @@ const Audio = () => {
 
   const [file, setFile] = useState<File | null>(null)
   // State to hold the preview URL of the selected file
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null)
+  const [previewUrl, setPreviewUrl] = useState<string>('')
 
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const [imagePrompt, setImagePrompt] = useState('')
-
+  const [imagePrompt, setImagePrompt] = useState<string>('')
+  const [audioPath, setAudioPath] = useState<string>('')
+  const [imagePath, setImagePath] = useState<string>('')
   const [aiImage, setAiImage] = useState('')
+
+  const [category, setCategory] = useState<string>('faith')
+  const [english, setEnglish] = useState<boolean>(false)
+  const [message, setMessage] = useState('')
 
   const voiceCategories = ['alloy', 'shimmer', 'nova', 'echo', 'fable', 'onyx']
   const [voiceType, setVoiceType] = useState<string | null>(null)
@@ -43,7 +51,7 @@ const Audio = () => {
 
   const handleGetAiImage = async (e: any) => {
     e.preventDefault()
-    setPreviewUrl(null)
+    setPreviewUrl('')
     if (!imagePrompt || !podcastTitle) {
       toast({ title: 'Title and Prompt must not be empty.' })
     } else {
@@ -63,13 +71,14 @@ const Audio = () => {
       console.log('returned', result)
 
       setIsSubmitting(false)
+      setImagePath(result.data)
       setPreviewUrl(result.data as string)
     }
   }
 
   const handleSubmit = async (e: any) => {
     e.preventDefault()
-    if (!podcastTitle || !inputText) {
+    if (!podcastTitle || !textPrompt) {
       toast({
         title: 'Title and Input Text must not be empty.',
         variant: 'destructive',
@@ -77,7 +86,11 @@ const Audio = () => {
       return
     }
     setIsSubmitting(true)
-    //await createSpeech(podcastTitle, inputText)
+    // const audio = await createSpeech(podcastTitle, textPrompt)
+    // console.log('aud', audio)
+    // if (audio && audio.frontendPath) {
+    //   setAudioPath(audio.frontendPath)
+
     // save file to server
     if (file) {
       try {
@@ -89,13 +102,30 @@ const Audio = () => {
         const response = await fetch('/api/podcastOwnImg', requestOptions)
         const result = await response.json()
         console.log('returned', result)
-        setPreviewUrl(result.data as string)
+        setImagePath(result.data)
+        setPreviewUrl(result.data)
+        console.log('imagePath', result.data)
       } catch (error) {
         console.log('hs', error)
       }
     }
+
+    const formData = new FormData()
+    formData.append('title', podcastTitle)
+    formData.append('description', description)
+    formData.append('textPrompt', textPrompt)
+    formData.append('imagePrompt', imagePrompt)
+    formData.append('audioPath', audioPath)
+    formData.append('imagePath', previewUrl)
+    formData.append('category', category)
+    formData.append('english', english.toString())
+    const result = await create(formData)
+    console.log('rescreate', result)
+    //setMessage(result.message)
     setIsSubmitting(false)
+    // alert(message)
     toast({ title: 'Podcast created and saved to the server.' })
+    //}
   }
 
   const handleVoiceType = (value: string) => {
@@ -122,12 +152,12 @@ const Audio = () => {
       }
     } else {
       setFile(null)
-      setPreviewUrl(null)
+      setPreviewUrl('')
     }
   }
   const removeFile = () => {
     setFile(null)
-    setPreviewUrl(null)
+    setPreviewUrl('')
     setMedia('')
   }
 
@@ -136,7 +166,7 @@ const Audio = () => {
       <h1>Text to Speech</h1>
       <form>
         <input
-          className='text-black pl-2'
+          className='text-black pl-2 w-full'
           type='text'
           value={podcastTitle}
           onChange={(e) => setPodcastTitle(e.target.value)}
@@ -144,8 +174,8 @@ const Audio = () => {
         />
         <textarea
           className='text-black text-[18px] pl-2 w-[100%] mt-2 h-[300px]'
-          value={inputText}
-          onChange={(e) => setInputText(e.target.value)}
+          value={textPrompt}
+          onChange={(e) => setTextPrompt(e.target.value)}
           placeholder='Enter text to convert to speech'
         />
         <div className='flex flex-col gap-2.5'>
@@ -175,6 +205,42 @@ const Audio = () => {
             <audio src={`/${voiceType}.mp3`} autoPlay className='hidden' />
           )}
         </div>
+
+        <textarea
+          className='text-[#2e2236] mt-4 pl-1 w-full'
+          name='text'
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          placeholder='Description...'
+        />
+
+        <label htmlFor='category' className='text-[25px] mt-4'>
+          Category
+        </label>
+        <select
+          id='category'
+          name='category'
+          className='mt-2 text-[#2e2236] w-full'
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+        >
+          <option value='faith'>Faith</option>
+          <option value='tech'>Tech</option>
+          <option value='other'>Other</option>
+        </select>
+
+        <label className='text-white'>
+          <input
+            name='english'
+            type='checkbox'
+            checked={english}
+            onChange={(e) => setEnglish(e.target.checked)}
+          />
+          <span className='pl-2'>
+            Is this to be displayed on the english webpage?
+          </span>
+        </label>
+
         <div className='flex flex-col gap-2 my-4'>
           <p
             onClick={() => setOpenOwnImage((prev) => !prev)}

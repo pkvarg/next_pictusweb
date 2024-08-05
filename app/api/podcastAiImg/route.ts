@@ -55,7 +55,7 @@ export async function POST(req: NextRequest) {
     const timestamp = getTimeStamp()
 
     const filePath = path.resolve(
-      `./public/podcast/images/${title}${timestamp}.png`
+      `./public/podcast/images/${title}_${timestamp}.png`
     )
 
     const frontendPath = `/podcast/images/${title}_${timestamp}.png`
