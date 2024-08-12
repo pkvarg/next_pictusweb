@@ -66,6 +66,11 @@ const AdminNavbar = () => {
                 <li>
                   <Link href={`/${locale}/admin/audio`}>Audio</Link>
                 </li>
+                <li>
+                  <Link href={`/${locale}/admin/styledAudio`}>
+                    Styled Audio
+                  </Link>
+                </li>
 
                 <li>
                   <Link href={`/${locale}/admin/video`}>Video</Link>
