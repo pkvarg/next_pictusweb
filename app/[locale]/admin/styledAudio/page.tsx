@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useToast } from '@/components/ui/use-toast'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
@@ -10,16 +10,9 @@ import {
   create,
   createSpeech,
 } from '@/app/[locale]/admin/_actions/podcastActions'
+import PreviewAudio from '@/lib/PreviewAudio'
 
 const StyledAudio = () => {
-  const audioRef = useRef<HTMLAudioElement>(null)
-
-  const handlePlay = (e: any) => {
-    //e.preventDefault()
-    if (audioRef.current) {
-      audioRef.current.play()
-    }
-  }
   const { toast } = useToast()
   const [textPrompt, setTextPrompt] = useState<string>('')
   const [podcastTitle, setPodcastTitle] = useState('')
@@ -99,24 +92,24 @@ const StyledAudio = () => {
     // if (audio && audio.frontendPath) {
     //   setAudioPath(audio.frontendPath)
 
-    // save file to server
-    if (file) {
-      try {
-        const formdata = new FormData()
-        if (file) formdata.append('files', file)
+    // // save file to server
+    // if (file) {
+    //   try {
+    //     const formdata = new FormData()
+    //     if (file) formdata.append('files', file)
 
-        const requestOptions = { method: 'POST', body: formdata }
+    //     const requestOptions = { method: 'POST', body: formdata }
 
-        const response = await fetch('/api/podcastOwnImg', requestOptions)
-        const result = await response.json()
-        console.log('returned', result)
-        setImagePath(result.data)
-        setPreviewUrl(result.data)
-        console.log('imagePath', result.data)
-      } catch (error) {
-        console.log('hs', error)
-      }
-    }
+    //     const response = await fetch('/api/podcastOwnImg', requestOptions)
+    //     const result = await response.json()
+    //     console.log('returned', result)
+    //     setImagePath(result.data)
+    //     setPreviewUrl(result.data)
+    //     console.log('imagePath', result.data)
+    //   } catch (error) {
+    //     console.log('hs', error)
+    //   }
+    // }
 
     const formData = new FormData()
     formData.append('title', podcastTitle)
@@ -124,7 +117,7 @@ const StyledAudio = () => {
     formData.append('textPrompt', textPrompt)
     formData.append('imagePrompt', imagePrompt)
     formData.append('audioPath', audioPath)
-    formData.append('imagePath', previewUrl)
+    formData.append('imagePath', imagePath)
     formData.append('category', category)
     formData.append('english', english.toString())
     const result = await create(formData)
@@ -150,13 +143,28 @@ const StyledAudio = () => {
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const selectedFile = e.target.files[0]
-      setFile(selectedFile)
-
       // Update preview URL state
       const reader = new FileReader()
       reader.readAsDataURL(selectedFile)
       reader.onloadend = () => {
         setPreviewUrl(reader.result as string)
+      }
+
+      //setFile(selectedFile)
+      console.log('media4', e.target.files[0])
+      try {
+        const formdata = new FormData()
+        formdata.append('files', e.target.files[0])
+
+        const requestOptions = { method: 'POST', body: formdata }
+
+        const response = await fetch('/api/podcastOwnImg', requestOptions)
+        const result = await response.json()
+        console.log('returned', result)
+        setImagePath(result.data)
+        console.log('imagePath', imagePath)
+      } catch (error) {
+        console.log('hs', error)
       }
     } else {
       setFile(null)
@@ -166,7 +174,7 @@ const StyledAudio = () => {
   const removeFile = () => {
     setFile(null)
     setPreviewUrl('')
-    setMedia('')
+    //setMedia('')
   }
 
   const generateAudio = async (e: any) => {
@@ -182,7 +190,7 @@ const StyledAudio = () => {
 
   return (
     <div className='flex flex-col gap-2 justify-center items-center py-16 w-full bg-[#0f1114] text-white  px-4 lg:px-[10%]'>
-      <h1>Text to Speech</h1>
+      <h1>Create Podcast</h1>
       <form>
         <label className='text-16 font-bold text-white'>Title</label>
         <input
@@ -241,20 +249,20 @@ const StyledAudio = () => {
             onChange={(e) => setTextPrompt(e.target.value)}
             placeholder='Enter text to convert to speech'
           />
-          // TODO generate only function
-          <button
-            onClick={generateAudio}
-            className='bg-orange-500 px-4 py-2 rounded-xl mt-4 cursor-pointer'
-          >
-            Generate
-          </button>
-          {audioPath && (
-            <>
-              <audio src={audioPath} autoPlay />
-              <audio ref={audioRef} src={audioPath} />
-              <button onClick={handlePlay}>Play Audio</button>
-            </>
-          )}
+
+          <div className='flex flex-row gap-4 justify-start items-center'>
+            <button
+              onClick={generateAudio}
+              className='bg-orange-500 px-4 py-2 rounded-xl mt-4 cursor-pointer'
+            >
+              Generate
+            </button>
+            {audioPath && (
+              <div className='mt-[15px]'>
+                <PreviewAudio audioPath={audioPath as string} />
+              </div>
+            )}
+          </div>
         </div>
 
         <br />
@@ -297,32 +305,36 @@ const StyledAudio = () => {
           </p>
 
           {openOwnImg && (
-            <div className='flex relative bg-[#2e2236] my-8'>
+            <div className='flex flex-col relative my-8'>
               <input
                 type='file'
                 id='image'
                 onChange={handleFileChange}
                 style={{ display: 'none' }}
               />
-              <button
-                type='button'
-                className='border border-white w-[36px] h-[36px] 100 flex items-center justify-center cursor-pointer'
-              >
-                <label htmlFor='image'>
-                  <Image src='/plus.png' alt='' width={16} height={16} />
-                </label>
-              </button>
-              <button
-                type='button'
-                className='ml-16 border border-white w-[36px] h-[36px] 100 flex items-center justify-center cursor-pointer'
-              >
-                <label htmlFor='image'>
-                  <AiOutlineDelete
-                    className='text-red-700'
-                    onClick={removeFile}
-                  />
-                </label>
-              </button>
+              <div className='flex flex-row'>
+                <button
+                  type='button'
+                  className='border border-white w-[36px] h-[36px] 100 flex items-center justify-center cursor-pointer'
+                >
+                  <label htmlFor='image'>
+                    <Image src='/plus.png' alt='' width={16} height={16} />
+                  </label>
+                </button>
+                <button
+                  type='button'
+                  className='ml-16 border border-white w-[36px] h-[36px] 100 flex items-center justify-center cursor-pointer'
+                >
+                  <label htmlFor='image'>
+                    <AiOutlineDelete
+                      className='text-red-700'
+                      onClick={removeFile}
+                    />
+                  </label>
+                </button>
+              </div>
+
+              <p className='mt-8'>{imagePath}</p>
             </div>
           )}
 
@@ -356,7 +368,7 @@ const StyledAudio = () => {
           </div>
         )}
 
-        {previewUrl ? (
+        {previewUrl && (
           <Image
             className='my-4 w-[150px] h-auto'
             src={previewUrl}
@@ -364,17 +376,16 @@ const StyledAudio = () => {
             width={50}
             height={50}
           />
-        ) : (
-          media !== '' && (
-            <Image className='w-[250px] my-4' src={media} alt={podcastTitle} />
-          )
         )}
 
         {isSubmitting ? (
           <Loader size={60} className='animate-spin ml-[45%] mt-4' />
         ) : (
-          <button onClick={handleSubmit} className='mt-4 hover:text-green-500'>
-            Create Speech
+          <button
+            onClick={handleSubmit}
+            className='bg-orange-500 px-4 py-2 rounded-xl mt-4 cursor-pointer'
+          >
+            Create Podcast
           </button>
         )}
       </form>

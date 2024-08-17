@@ -3,6 +3,8 @@ import fs from 'fs'
 import { pipeline, Readable } from 'stream'
 import { promisify } from 'util'
 import { getTimeStamp } from '@/lib/timestamp'
+import { CloudCog } from 'lucide-react'
+import { log } from 'console'
 const pump = promisify(pipeline)
 
 function readableStreamToNodeReadable(
@@ -28,6 +30,8 @@ export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData()
     const fileEntry = formData.getAll('files')[0]
+    console.log('own file', fileEntry)
+    //process.exit
 
     // Type guard to ensure fileEntry is a File
     if (fileEntry && fileEntry instanceof File) {
